@@ -1,0 +1,9 @@
+# IDE
+.idea/
+
+# Win specific
+Thumbs.db
+Desktop.ini
+
+# Mac specific
+.DS_Store
