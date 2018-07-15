@@ -3,13 +3,6 @@
 namespace DesignPatterns\Behavioral;
 
 /**
- * Template Method Design Pattern
- *
- * Defines the skeleton of an algorithm and allow subclasses to redefine certain steps of the algorithm
- * without changing its structure (call sequence).
- */
-
-/**
  * Abstract class which defines the template method convert() and declares all its steps
  */
 abstract class AbstractFileConverter

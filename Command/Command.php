@@ -3,13 +3,6 @@
 namespace DesignPatterns\Behavioral;
 
 /**
- * Command Design Pattern
- *
- * Turns operations into objects and such objects can be queued, canceled or logged.
- * The key idea behind this pattern is to provide the means to decouple client from receiver.
- */
-
-/**
  * Abstract command
  */
 abstract class Command
