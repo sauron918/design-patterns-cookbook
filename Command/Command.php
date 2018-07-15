@@ -36,8 +36,8 @@ class TurnOffCommand extends Command
     }
 }
 
-/*
- * An invoker of commands
+/**
+ * Invoker of commands
  */
 class Invoker
 {

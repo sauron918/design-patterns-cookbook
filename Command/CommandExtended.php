@@ -5,7 +5,7 @@ namespace DesignPatterns\Behavioral;
 /**
  * Abstract command
  */
-abstract class ExtendedCommand
+abstract class CommandExtended
 {
     protected $receiver;
     protected $params;
@@ -25,13 +25,14 @@ abstract class ExtendedCommand
      * We should have possibility to execute command and rollback if necessary
      */
     public abstract function execute();
+
     public abstract function rollback();
 }
 
 /**
  * Concrete command, doesn't do all the work by self and only passes the call to the receiver
  */
-class TurnOnCommand extends ExtendedCommand
+class TurnOnCommand extends CommandExtended
 {
     public function execute()
     {
@@ -47,6 +48,7 @@ class TurnOnCommand extends ExtendedCommand
 /*
  * Invoker of commands
  */
+
 class Invoker
 {
     /**
@@ -54,7 +56,7 @@ class Invoker
      */
     protected $commands = [];
 
-    public function pushCommand(ExtendedCommand $command)
+    public function pushCommand(CommandExtended $command)
     {
         return array_push($this->commands, $command);
     }
@@ -64,7 +66,7 @@ class Invoker
      */
     public function executeCommand()
     {
-        /** @var ExtendedCommand $lastCommand */
+        /** @var CommandExtended $lastCommand */
         if ($lastCommand = array_pop($this->commands)) {
             return $lastCommand->execute();
         }
@@ -77,7 +79,7 @@ class Invoker
      */
     public function rollbackCommand()
     {
-        /** @var ExtendedCommand $lastCommand */
+        /** @var CommandExtended $lastCommand */
         if ($lastCommand = array_pop($this->commands)) {
             return $lastCommand->rollback();
         }
@@ -93,12 +95,12 @@ class Receiver
 {
     public function turnOn($params)
     {
-        echo "Receiver: Turning on something with params: ". implode(', ', $params) . PHP_EOL;
+        echo "Receiver: Turning on something with params: " . implode(', ', $params) . PHP_EOL;
     }
 
     public function turnOff($params)
     {
-        echo "Receiver: Turning off something with params: ". implode(', ', $params) . PHP_EOL;
+        echo "Receiver: Turning off something with params: " . implode(', ', $params) . PHP_EOL;
     }
 }
 
