@@ -6,7 +6,7 @@ namespace DesignPatterns\Behavioral;
  * Template Method Design Pattern
  *
  * Defines the skeleton of an algorithm and allow subclasses to redefine certain steps of the algorithm
- * without changing its structure.
+ * without changing its structure (call sequence).
  */
 
 /**
