@@ -3,19 +3,19 @@
 namespace DesignPatterns\Behavioral;
 
 /**
- * Basic interface for all visitors, declares a set of visiting methods
- * that correspond to Visitable classes
+ * Basic interface for all visitors, declares a set of visiting methods.
+ * Visitors should be aware about of all classes of documents
  */
 interface Visitor
 {
     public function visitTemplate(Template $template);
-    
+
     public function visitReport(Report $report);
 }
 
 /**
- * Concrete visitor which extends documents by export function in JSON.
- * We should have implementation for all concrete document classes (Template, Report, etc)
+ * Concrete visitor, extends documents by export function in JSON.
+ * We should have an implementation for all concrete document classes
  */
 class JSONExportVisitor implements Visitor
 {
@@ -31,7 +31,8 @@ class JSONExportVisitor implements Visitor
 }
 
 /**
- * Concrete visitor which extends documents by export function in XML
+ * Concrete visitor, extends documents by export function in XML.
+ * Contains implementation of XML export for Template and Report classes
  */
 class XMLExportVisitor implements Visitor
 {
@@ -67,7 +68,8 @@ interface Visitable
 }
 
 /**
- * Base class for all documents
+ * Base class for all documents.
+ * Document hierarchy should only know about the basic interface of visitors
  */
 abstract class Document implements Visitable
 {
