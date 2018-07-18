@@ -6,22 +6,16 @@ use SplObserver;
 use SplSubject;
 
 /**
- * Subject owns some important state and notifies observers when the state changes.
  * PHP has several built-in interfaces \SplSubject, \SplObserver which help us
- * to build implementations of the Observer
+ * to build implementations of the Observer.
+ * Trait encapsulates an implementation of basic \SplSubject methods
  */
-class Process implements \SplSubject
+trait Observable
 {
-    /**
-     * Some business logic state
-     * @var int
-     */
-    protected $priority = 0;
-
     /**
      * List of observers
      * Tip: you also can use \SplObjectStorage instead of simple array
-     * @var array
+     * @var SplObserver[]
      */
     private $observers = [];
 
@@ -56,25 +50,41 @@ class Process implements \SplSubject
             $observer->update($this);
         }
     }
+}
+
+/**
+ * Shopping cart owns some important state and notifies observers when the state changes.
+ */
+class Cart implements \SplSubject
+{
+    use Observable;
+
+    /**
+     * Some business logic state
+     * @var int
+     */
+    protected $balance = 0;
 
     // Business logic
 
     /**
      * Changes state
-     * @param integer $priority
+     * @param int $balance
      */
-    public function setPriority(int $priority)
+    public function setBalance(int $balance)
     {
-        $this->priority = $priority;
-        $this->notify();
+        if ($this->balance !== $balance) {
+            $this->balance = $balance;
+            $this->notify();
+        }
     }
 
     /**
      * Return current state
      */
-    public function getPriority()
+    public function getBalance()
     {
-        return $this->priority;
+        return $this->balance;
     }
 }
 
@@ -89,19 +99,19 @@ class LoggingListener implements SplObserver
      */
     public function update(SplSubject $subject)
     {
-        if (!$subject instanceof Process) {
+        if (!$subject instanceof Cart) {
             return;
         }
 
-        echo 'Notification: process priority was changed to ' . $subject->getPriority();
+        echo 'Notification: balance of the shopping cart was changed to ' . $subject->getBalance() . PHP_EOL;
     }
 }
 
 # Client code example
-$process = new Process();
-$process->attach(new LoggingListener());
+$cart = new Cart();
+$cart->attach(new LoggingListener());
 
-$process->setPriority(10);
+$cart->setBalance(10);
 
 /* Output:
-Notification: process priority was changed to: 10 */
+Notification: balance of the shopping cart was changed to 10 */
