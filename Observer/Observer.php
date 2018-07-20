@@ -68,7 +68,7 @@ class Cart implements \SplSubject
     // Business logic
 
     /**
-     * Changes state
+     * Changes state and notifies all subscribers about it
      * @param int $balance
      */
     public function setBalance(int $balance)
