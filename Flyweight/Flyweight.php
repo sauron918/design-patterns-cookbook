@@ -15,10 +15,9 @@ class ShoppingCart
     /** @var Product[] */
     protected $products = [];
 
-    public function addProduct($title, $price, $brand, $brandLogo)
+    public function addProduct($title, $price, $brandName, $brandLogo)
     {
-        $productBrand = ProductFactory::getBrand($brand, $brandLogo);
-        $this->products[] = ProductFactory::getProduct($title, $price, $productBrand);
+        $this->products[] = ProductFactory::getProduct($title, $price, $brandName, $brandLogo);
     }
 
     public function getProducts()
@@ -71,18 +70,26 @@ class ProductFactory
 {
     public static $brandTypes = [];
 
-    public static function getBrand($brandName, $brandLogo)
+    /**
+     * Returns new Product instance
+     */
+    public static function getProduct($title, $price, $brandName, $brandLogo): Product
+    {
+        $brand = static::getBrand($brandName, $brandLogo);
+
+        return new Product($title, $price, $brand);
+    }
+
+    /**
+     * Checks if we already have brand instance or create a new one if not
+     */
+    protected static function getBrand($brandName, $brandLogo): ProductBrand
     {
         if (isset(static::$brandTypes[$brandName])) {
             return static::$brandTypes[$brandName];
         }
 
         return static::$brandTypes[$brandName] = new ProductBrand($brandName, $brandLogo);
-    }
-
-    public static function getProduct($title, $price, $productBrand)
-    {
-        return new Product($title, $price, $productBrand);
     }
 }
 
