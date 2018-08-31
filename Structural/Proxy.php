@@ -29,7 +29,7 @@ class Weather implements WeatherClient
             . '&APPID=' . $this->token);
         $data = json_decode($json, true);
 
-        return 'weather: ' . $data['weather'][0]['description'] . PHP_EOL ?? 'no data';
+        return 'weather: ' . $data['weather'][0]['description'] ?? 'no data' . PHP_EOL;
     }
 }
 

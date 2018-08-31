@@ -110,8 +110,21 @@ class CsvIterator implements \Iterator
 
 
 # Client code example
+// some CSV data
+$csvContent = <<<CSV
+    Name;Value;isActive
+    First;10;true
+    Second;20;false
+    Third;30;true
+CSV;
+
 try {
-    $csv = new CsvIterator(__DIR__ . '/example.csv');
+    // create temp file and save CSV data inside
+    $file = tmpfile();
+    $path = stream_get_meta_data($file)['uri'];
+    fwrite($file, $csvContent);
+
+    $csv = new CsvIterator($path);
     foreach ($csv as $key => $row) {
         echo $key . ':' . implode(', ', $row) . PHP_EOL;
     }
