@@ -5,6 +5,24 @@ namespace DesignPatterns\Creational;
 /**
  * Extended example of Builder design pattern with Director
  */
+class Page
+{
+    public $title;
+    public $header;
+    public $content;
+    public $footer;
+
+    public function show(): string
+    {
+        $result = $this->title;
+        $result .= $this->header;
+        $result .= $this->content;
+        $result .= $this->footer;
+
+        return $result;
+    }
+}
+
 class Director
 {
     protected $builder;
@@ -62,24 +80,7 @@ class HTMLPageBuilder extends Builder
     }
 }
 
-class Page
-{
-    public $title;
-    public $header;
-    public $content;
-    public $footer;
-
-    public function show(): string
-    {
-        $result = $this->title;
-        $result .= $this->header;
-        $result .= $this->content;
-        $result .= $this->footer;
-
-        return $result;
-    }
-}
-
+# Client code example
 $page = new Page();
 $director = new Director(new HTMLPageBuilder($page));
 $director->construct();
