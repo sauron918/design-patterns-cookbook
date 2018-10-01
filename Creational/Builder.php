@@ -23,12 +23,7 @@ class Page
 
     public function show(): string
     {
-        $result = $this->title;
-        $result .= $this->header;
-        $result .= $this->content;
-        $result .= $this->footer;
-
-        return $result;
+        return $this->title . $this->header . $this->content . $this->footer;
     }
 }
 
