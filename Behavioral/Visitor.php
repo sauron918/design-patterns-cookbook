@@ -98,7 +98,7 @@ class Template extends Document
     }
 }
 
-class Report extends Document implements Visitable
+class Report extends Document
 {
     public $diagram = ' {diagram} ';
 

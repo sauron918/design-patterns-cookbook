@@ -7,7 +7,8 @@ namespace DesignPatterns\Behavioral;
  */
 class Editor
 {
-    protected $content = '';
+    // content is hidden
+    private $content = '';
 
     public function type(string $words)
     {
@@ -77,13 +78,14 @@ class EditorMemento implements Memento
 $editor = new Editor();
 $editor->type('This is the first sentence.');
 $editor->type('This is second.');
-$saved = $editor->save();
+$memento = $editor->save();
+
 $editor->type('And this is third.');
 echo $editor->getContent() . PHP_EOL;
 /* Output:
 This is the first sentence. This is second. And this is third. */
 
-$editor->restore($saved);
+$editor->restore($memento);
 echo $editor->getContent() . PHP_EOL;
 /* Output:
 This is the first sentence. This is second. */

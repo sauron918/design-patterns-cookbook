@@ -55,7 +55,7 @@ trait Observable
 /**
  * Shopping cart owns some important state and notifies observers when the state changes.
  */
-class Cart implements \SplSubject
+class Cart implements SplSubject
 {
     use Observable;
 

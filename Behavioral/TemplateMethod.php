@@ -1,96 +1,71 @@
 <?php
 
-namespace DesignPatterns\Behavioral;
-
 /**
- * Abstract class which defines the template method convert() and declares all its steps
+ * Builder class demonstrates using of Template Method patter
+ * Method build() defines all steps of an algorithm
  */
-abstract class AbstractFileConverter
+abstract class Builder
 {
     /**
      * Template method
      */
-    final public function convert()
+    final public function build()
     {
-        $this->beforeSteps();
-        $this->openFile();
-        $this->validate();
-        $this->makeConversion();
-        $this->closeFile();
-        $this->afterSteps();
+        $this->create();
+        $this->init();
+        $this->test();
+        $this->deploy();
     }
 
-    /**
-     * Default implementations of some steps
-     */
-    protected function openFile()
+    protected function create()
     {
-        echo "Step1. Read from file..\n";
+        echo 'Creating an application..' . PHP_EOL;
     }
 
-    protected function closeFile()
+    protected function init()
     {
-        echo "Step4. Close file descriptor..\n";
-
+        echo 'Initialization..' . PHP_EOL;
     }
 
-    /**
-     * These steps have to be implemented in subclasses
-     */
-    abstract protected function validate();
-
-    abstract protected function makeConversion();
-
-    /**
-     * Optional methods provide additional extension points
-     */
-    protected function beforeSteps()
+    protected function test()
     {
+        echo 'Running tests..' . PHP_EOL;
     }
 
-    protected function afterSteps()
-    {
-    }
+    abstract protected function deploy();
 }
 
 /**
- * Concrete class implements all abstract operations of the abstract class.
- * They also overrides some operations with a default implementation
+ * Concrete classes override some operations from the template method algorithm
  */
-class PDFFileConverter extends AbstractFileConverter
+class AndroidBuilder extends Builder
 {
-    protected function validate()
+    protected function deploy()
     {
-        echo "Step2. Validate PDF file..\n";
-    }
-
-    protected function makeConversion()
-    {
-        echo "Step3. Convert PDF file..\n";
+        echo 'Deploying Android application!' . PHP_EOL;
     }
 }
 
-/**
- * Another concrete class with self implementation of some steps
- */
-class CSVFileConverter extends AbstractFileConverter
+class iOSBuilder extends Builder
 {
-    protected function validate()
+    protected function deploy()
     {
-        echo "Step2. Validate CSV file..\n";
-    }
-
-    protected function makeConversion()
-    {
-        echo "Step3. Convert CSV file..\n";
+        echo 'Deploying iOS application!' . PHP_EOL;
     }
 }
+
 
 # Client code example
-(new PDFFileConverter())->convert();
-
+(new AndroidBuilder)->build();
 /* Output:
-Step1. Read from file..
-Step2. Validate PDF file..
-Step3. Convert PDF file..
-Step4. Close a file descriptor.. */
+Creating an application..
+Initialization..
+Running tests..
+Deploying Android application! */
+
+(new iOSBuilder)->build();
+/* Output:
+Creating an application..
+Initialization..
+Running tests..
+Deploying iOS application! */

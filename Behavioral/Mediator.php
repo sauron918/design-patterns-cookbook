@@ -16,7 +16,6 @@ interface Mediator
  */
 class ChatMediator implements Mediator
 {
-
     /**
      * When something happens, component sends an notification to the mediator.
      * After receiving the notification, the mediator can either do something on his own, or redirect
@@ -67,8 +66,7 @@ class Bot
 
     public function banUser(User $user)
     {
-        $data = $user;
-        $this->mediator->notify($this, 'banUser', $data);
+        $this->mediator->notify($this, 'banUser', $user);
     }
 }
 

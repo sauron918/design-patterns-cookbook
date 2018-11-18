@@ -10,16 +10,16 @@ class TextEditor
 {
     protected $state;
 
-    public function __construct(WritingState $state)
+    public function __construct(State $state)
     {
         $this->state = $state;
     }
 
     /**
      * Allows changing the editor state at runtime
-     * @param WritingState $state
+     * @param State $state
      */
-    public function setState(WritingState $state)
+    public function setState(State $state)
     {
         $this->state = $state;
     }
@@ -37,13 +37,13 @@ class TextEditor
 /**
  * State interface declares methods that all Concrete State should implement
  */
-interface WritingState
+interface State
 {
     public function write(string $words);
 }
 
 
-class DefaultText implements WritingState
+class DefaultState implements State
 {
     public function write(string $words)
     {
@@ -51,7 +51,7 @@ class DefaultText implements WritingState
     }
 }
 
-class UpperCase implements WritingState
+class UpperCase implements State
 {
     public function write(string $words)
     {
@@ -59,7 +59,7 @@ class UpperCase implements WritingState
     }
 }
 
-class LowerCase implements WritingState
+class LowerCase implements State
 {
     public function write(string $words)
     {
@@ -68,7 +68,7 @@ class LowerCase implements WritingState
 }
 
 # Client code example
-$editor = new TextEditor(new DefaultText());
+$editor = new TextEditor(new DefaultState());
 $editor->type('First line');
 
 $editor->setState(new UpperCase());

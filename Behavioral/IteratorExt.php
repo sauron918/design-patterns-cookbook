@@ -14,6 +14,12 @@ class CsvIterator implements \Iterator
     protected $file = null;
 
     /**
+     * The delimiter for the CSV file, e.g. ',', ';'
+     * @var string
+     */
+    protected $delimiter = null;
+
+    /**
      * The current row, which is returned on each iteration
      * @var array
      */
@@ -24,12 +30,6 @@ class CsvIterator implements \Iterator
      * @var int
      */
     protected $rowCounter = null;
-
-    /**
-     * The delimiter for the CSV file, e.g. ',', ';'
-     * @var string
-     */
-    protected $delimiter = null;
 
     /**
      * Tries to open the CSV file
