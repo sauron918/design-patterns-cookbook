@@ -2,6 +2,9 @@
 
 namespace DesignPatterns\Creational;
 
+/**
+ * Lets you ensure that a class has only one instance and providing a global access to this instance
+ */
 trait Singleton
 {
     protected static $instance;
@@ -17,7 +20,7 @@ trait Singleton
      * Singleton's constructor should not be public. However, it can't be
      * private either if we want to allow subclassing.
      */
-    final private function __construct()
+    protected function __construct()
     {
         $this->init();
     }
@@ -45,17 +48,20 @@ class Application
 
     protected function init()
     {
-        $this->foo = 1;
+        $this->isRunning = true;
     }
 }
 
+// there is the only one way to get an application instance
 $app = Application::getInstance();
-if ($app2 = Application::getInstance() === $app) {
-    echo '$app2 is the same application instance';
-}
-/* Output: $app2 is the same application instance */
 
-// Next calls will produce errors:
-// $app2 = new Application();
-// $app2 = clone $app;
-// $app2 = unserialize(serialize($app));
+$secondApp = Application::getInstance();
+if ($secondApp === $app) {
+    echo 'It\'s the same instance';
+}
+/* Output: It's the same instance */
+
+/*  Next calls will produce errors:
+    $app2 = new Application();
+    $app2 = clone $app;
+    $app2 = unserialize(serialize($app)); */
