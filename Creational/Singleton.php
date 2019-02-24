@@ -62,6 +62,6 @@ if ($secondApp === $app) {
 /* Output: It's the same instance */
 
 /*  Next calls will produce errors:
-    $app2 = new Application();
-    $app2 = clone $app;
-    $app2 = unserialize(serialize($app)); */
+    $app = new Application();
+    $app = clone $app;
+    $app = unserialize(serialize($app)); */

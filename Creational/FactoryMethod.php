@@ -78,10 +78,10 @@ $response = '';
 
 switch ($responseFormat) {
     case 'json':
-        $response = new JsonResponse($data);
+        $response = new JsonResponse($data); // will use JSONFormatter
         break;
     case 'html':
-        $response = new HTMLResponse($data);
+        $response = new HTMLResponse($data); // will use HTMLFormatter
         break;
 }
 
