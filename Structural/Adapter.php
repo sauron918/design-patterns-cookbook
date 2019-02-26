@@ -73,8 +73,10 @@ echo $book->turnPage();
 $book = new KindleAdapter(new Kindle());
 echo $book->open();
 echo $book->turnPage();
+
 /* Output:
 Open the book..
 Go to the next page..
+
 Turn on the Kindle..
 Press next button on Kindle.. */

@@ -53,15 +53,15 @@ class Mail
 
 class SignUpFacade
 {
-    private $validate;
-    private $user;
-    private $mail;
+    private $validator;
+    private $userService;
+    private $mailService;
 
     public function __construct()
     {
-        $this->validate = new Validator();
-        $this->user = new User();
-        $this->mail = new Mail();
+        $this->validator = new Validator();
+        $this->userService = new User();
+        $this->mailService = new Mail();
     }
 
     /**
@@ -69,12 +69,12 @@ class SignUpFacade
      */
     public function signUpUser($userName, $userPass, $userMail)
     {
-        if (!$this->validate->isValidMail($userMail)) {
+        if (!$this->validator->isValidMail($userMail)) {
             throw new \Exception('Invalid email');
         }
 
-        $this->user->create($userName, $userPass, $userMail);
-        $this->mail->to($userMail)->subject('Welcome')->send();
+        $this->userService->create($userName, $userPass, $userMail);
+        $this->mailService->to($userMail)->subject('Welcome')->send();
     }
 }
 

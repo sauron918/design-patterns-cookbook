@@ -103,6 +103,6 @@ switch ($templateEngine) {
 }
 
 // we will have header and body as either Smarty or Blade template, but never mixed
-echo ($templateFactory->createHeader())->render();
-echo ($templateFactory->createBody())->render();
+echo $templateFactory->createHeader()->render();
+echo $templateFactory->createBody()->render();
 /* Output: <h1>{{ $title }}</h1><main>{{ $content }}</main> */
