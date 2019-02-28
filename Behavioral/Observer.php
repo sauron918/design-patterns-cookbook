@@ -108,10 +108,9 @@ class LoggingListener implements SplObserver
 }
 
 # Client code example
-$cart = new Cart();
-$cart->attach(new LoggingListener());
-
-$cart->setBalance(10);
+$cart = new Cart(); // subject
+$cart->attach(new LoggingListener()); // attach an Observer
+$cart->setBalance(10); // trigger an event
 
 /* Output:
 Notification: balance of the shopping cart was changed to 10 */

@@ -79,7 +79,8 @@ class Sorter
 # Client code example
 $data = [4, 2, 1, 5, 9];
 
-// for small amounts of data a bubble sort is used and for large amounts - a quick sort
+// for small amount of data the "Bubble Sort" algorithm will be used
+// and for large amounts - the "Quick Sort" algorithm
 if (count($data) < 10) {
     $sorter = new Sorter(new BubbleSortStrategy());
     $sorter->sortArray($data);

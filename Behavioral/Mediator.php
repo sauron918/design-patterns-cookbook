@@ -77,6 +77,8 @@ $john = new User('John', $chat);
 $jane = new User('Jane', $chat);
 $bot = new Bot($chat);
 
+// every chat member interacts with mediator,
+// but not with with each other directly
 $john->sendMessage("Hi!");
 $jane->sendMessage("What's up?");
 $bot->banUser($john);

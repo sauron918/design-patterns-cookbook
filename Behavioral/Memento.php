@@ -78,14 +78,14 @@ class EditorMemento implements Memento
 $editor = new Editor();
 $editor->type('This is the first sentence.');
 $editor->type('This is second.');
+// make a snapshot
 $memento = $editor->save();
 
 $editor->type('And this is third.');
 echo $editor->getContent() . PHP_EOL;
-/* Output:
-This is the first sentence. This is second. And this is third. */
+/* Output: This is the first sentence. This is second. And this is third. */
 
+// restore the state from snapshot
 $editor->restore($memento);
 echo $editor->getContent() . PHP_EOL;
-/* Output:
-This is the first sentence. This is second. */
+/* Output: This is the first sentence. This is second. */
