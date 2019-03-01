@@ -12,12 +12,9 @@ class Page
     }
 
     /**
-     * Cloning method, each object should implement how he will clone himself.
-     * OR you can simple use the `clone` keyword to create an exact copy of an object
-     * @see PrototypeExt.php
-     * @return Page
+     * Cloning method, each object should implement how it will be cloned himself
      */
-    public function getClone()
+    public function getClone(): self
     {
         return new static($this->title);
     }

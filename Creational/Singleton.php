@@ -48,20 +48,18 @@ class Application
 
     protected function init()
     {
-        $this->isRunning = true;
+        echo 'Application is initialized once ...';
     }
 }
 
 // there is the only one way to get an application instance
 $app = Application::getInstance();
+// every call will give the same instance
+assert(Application::getInstance() === $app);
 
-$secondApp = Application::getInstance();
-if ($secondApp === $app) {
-    echo 'It\'s the same instance';
-}
-/* Output: It's the same instance */
+/* Output: Application is initialized once ... */
 
-/*  Next calls will produce errors:
-    $app = new Application();
-    $app = clone $app;
-    $app = unserialize(serialize($app)); */
+/* Next calls will produce errors:
+$app = new Application();
+$app = clone $app;
+$app = unserialize(serialize($app)); */
