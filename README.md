@@ -1,18 +1,18 @@
 # Design Patterns Cookbook
-Коллекция самых популярных Шаблонов Проектирования (Design Patterns) с описанием и примерами на PHP.
+A collection of the most popular Design Patterns with descriptions and examples in PHP.
 
 
-## 1. Порождающие шаблоны (Creational Patterns)
+## 1. Creational Patterns
 
-## Одиночка (Singleton)
-#### Суть паттерна
-Гарантирует, что существует только один объект данного типа в приложении, и предоставляет к нему глобальную точку доступа.
+## Singleton
+#### The essence of the pattern
+Ensures that only one object of a given type exists in the application, and provides a global point of access to it.
 
-#### Какие проблемы решает
-* Гарантирует наличие единственного экземпляра класса
-* Предоставляет глобальную точку доступа
+#### What problems it solves
+* Guarantees that a class has a single instance
+* Provides a global point of access
 
-#### Пример
+#### Example
 ```php
 // there is the only one way to get an application instance
 $app = Application::getInstance();
@@ -24,19 +24,19 @@ $app = new Application();
 $app = clone $app;
 $app = unserialize(serialize($app)); */
 ```
-[Полный пример](Creational/Singleton.php)
+[Full example](Creational/Singleton.php)
 
 
-## Прототип (Prototype)
-#### Суть паттерна
-Паттерн описывает процесс создания объектов-клонов на основе имеющегося объекта-прототипа. Другими словами, паттерн  описывает способ организации процесса клонирования. Обычно операция клонирования происходить через метод `getClone()`, который описан в базовом классе. 
+## Prototype
+#### The essence of the pattern
+The pattern describes the process of creating clone objects based on an existing prototype object. In other words, the pattern describes how to organize the cloning process. Usually the cloning operation happens through a `getClone()` method, which is declared in the base class.
 
-В PHP возможность клонирования объектов [встроена](http://php.net/manual/en/language.oop5.cloning.php), при помощи ключевого слова `clone` вы можете сделать точную копию объекта. Чтобы добавить поддержку клонирования в класс, необходимо реализовать метод `__clone()`.
+In PHP the ability to clone objects is [built in](http://php.net/manual/en/language.oop5.cloning.php): using the `clone` keyword you can make an exact copy of an object. To add cloning support to a class, you need to implement the `__clone()` method.
 
-#### Какие проблемы решает
-* Позволяет копировать объекты, не вдаваясь в подробности их реализации
+#### What problems it solves
+* Lets you copy objects without going into the details of their implementation
 
-#### Пример
+#### Example
 ```php
 class Page
 {
@@ -55,18 +55,18 @@ class Page
 $page = new Page('Page Title');
 echo $pageClone = $page->getClone(); // Page Title
 ```
-[Полный пример](Creational/Prototype.php) | [Дополнительный пример](Creational/PrototypeExt.php)
+[Full example](Creational/Prototype.php) | [Additional example](Creational/PrototypeExt.php)
 
 
-## Строитель (Builder)
-#### Суть паттерна
-Позволяет создавать сложные объекты пошагово, а также дает возможность использовать один и тот же код строительства для получения разных представлений объектов.
+## Builder
+#### The essence of the pattern
+Lets you construct complex objects step by step, and also makes it possible to use the same construction code to produce different representations of objects.
 
-#### Какие проблемы решает
-* Определяет процесс поэтапного построения сложного продукта
-* Позволяет избавиться от "телескопических" конструкторов `__construct($param1, $param2, ..., $paramN)`
+#### What problems it solves
+* Defines the process of building a complex product step by step
+* Lets you get rid of "telescoping" constructors `__construct($param1, $param2, ..., $paramN)`
 
-#### Пример
+#### Example
 ```php
 $page = (new PageBuilder('<h1>Home page</h1>'))
     ->addHeader('<header></header>')
@@ -79,20 +79,20 @@ echo $page->build()->show();
 /* Output:
   <h1>Home page</h1><header></header><article>content</article><footer></footer> */
 ```
-[Полный пример](Creational/Builder.php) | [Дополнительный пример](Creational/BuilderExt.php)
+[Full example](Creational/Builder.php) | [Additional example](Creational/BuilderExt.php)
 
 
-## Фабричный метод (Factory Method)
-#### Суть паттерна
-Определяет общий интерфейс для создания объектов в суперклассе, позволяя подклассам изменять тип создаваемых объектов. 
-Предлагает создавать объекты не напрямую, используя оператор `new`, а через вызов особого фабричного метода. Объекты все равно будут создаваться при помощи new, но делать это будет фабричный метод. Чтобы эта система заработала, все возвращаемые объекты должны иметь общий интерфейс. 
+## Factory Method
+#### The essence of the pattern
+Defines a common interface for creating objects in a superclass, allowing subclasses to change the type of objects being created.
+It proposes creating objects not directly, using the `new` operator, but through a call to a special factory method. The objects will still be created using `new`, but the factory method will do it. For this system to work, all returned objects must share a common interface.
 
-#### Какие проблемы решает
-* Позволяет использовать наследование и полиморфизм, чтобы инкапсулировать создание конкретных экземпляров
-* Решает проблему создания объектов, без указания конкретных классов
-* Применяется когда система должна оставаться легко расширяемой, путем добавления объектов новых типов
+#### What problems it solves
+* Lets you use inheritance and polymorphism to encapsulate the creation of concrete instances
+* Solves the problem of creating objects without specifying their concrete classes
+* Used when the system must remain easily extensible by adding objects of new types
 
-#### Пример
+#### Example
 ```php
 abstract class Response {}
 class JSONResponse extends Response {}
@@ -108,19 +108,19 @@ echo $response = new JsonResponse('some input data');
 
 /* Output: {"code": 200, "response": "some input data"} */
 ```
-[Полный пример](Creational/FactoryMethod.php)
+[Full example](Creational/FactoryMethod.php)
 
 
-## Абстрактная фабрика (Abstract Factory)
-#### Суть паттерна
-Позволяет создавать семейства связанных объектов, не привязываясь к конкретным классам создаваемых объектов. Или другими словами - предусматривает интерфейс для создания семейства связанных или зависимых объектов без указания конкретных классов.
-Обычно программа создает конкретный объект фабрики при запуске, причем тип фабрики выбирается, исходя из параметров окружения или конфигурации.
+## Abstract Factory
+#### The essence of the pattern
+Lets you create families of related objects without being tied to the concrete classes of the objects being created. In other words, it provides an interface for creating families of related or dependent objects without specifying their concrete classes.
+Usually the program creates a concrete factory object at startup, and the type of factory is chosen based on environment or configuration parameters.
 
-#### Какие проблемы решает
-* Скрывает от клиентского кода подробности того, как и какие конкретно объекты будут созданы
-* Решает проблему несовместимости набора связанных объектов, при их создании
+#### What problems it solves
+* Hides from the client code the details of how and which concrete objects will be created
+* Solves the problem of incompatibility between a set of related objects when they are created
 
-#### Пример
+#### Example
 ```php
 // the factory is selected based on the environment or configuration parameters
 $templateEngine = 'blade';
@@ -138,21 +138,21 @@ echo $templateFactory->createHeader()->render();
 echo $templateFactory->createBody()->render();
 /* Output: <h1>{{ $title }}</h1><main>{{ $content }}</main> */
 ```
-[Полный пример](Creational/AbstractFactory.php) 
+[Full example](Creational/AbstractFactory.php) 
 
 
-## 2. Структурные шаблоны (Structural Patterns)
+## 2. Structural Patterns
 
-## Адаптер (Adapter)
-#### Суть паттерна
-Адаптирует существующий код к требуемому интерфейсу (является переходником). Например, у вас есть класс и его интерфейс не совместим с кодом вашей системы, в этом случае мы не изменяем код этого класса, а пишем для него адаптер - "оборачиваем" объект так, чтобы хранить ссылку на него, и непосредственно конвертируем интерфейс объекта к требуемому. 
-Мы можем создавать адаптер в любом направлении, как для какой-то старой системы чтобы использовать ее функционал с новым интерфейсом, так и любой новый интерфейс в соответствии с тем что ожидает уже существующий объект.
+## Adapter
+#### The essence of the pattern
+Adapts existing code to a required interface (acts as an adapter/converter). For example, you have a class whose interface is not compatible with the code of your system; in this case we don't change the code of that class, but write an adapter for it — we "wrap" the object so as to hold a reference to it, and directly convert the object's interface to the required one.
+We can create an adapter in either direction: either for some old system, to use its functionality with a new interface, or any new interface to match what an already existing object expects.
 
-#### Какие проблемы решает
-* Позволяет использовать сторонний класс, если его интерфейс не совместим с существующим кодом
-* Когда нужно использовать несколько существующих подклассов, но в них не хватает какой-то общей функциональности (и расширить суперкласс мы не можем)
+#### What problems it solves
+* Lets you use a third-party class if its interface is not compatible with existing code
+* When you need to use several existing subclasses, but they lack some common functionality (and we can't extend the superclass)
 
-#### Пример
+#### Example
 ```php
 $book = new Book();
 $book->open();
@@ -170,19 +170,19 @@ Go to the next page..
 Turn on the Kindle..
 Press next button on Kindle.. */
 ```
-[Полный пример](Structural/Adapter.php)
+[Full example](Structural/Adapter.php)
 
 
-## Декоратор (Decorator)
-#### Суть паттерна
-Позволяет динамически добавлять объектам новую функциональность, не изменяя их интерфейс.
+## Decorator
+#### The essence of the pattern
+Lets you dynamically add new functionality to objects without changing their interface.
 
-#### Какие проблемы решает
-* Помогает расширить класс каким-то определенным действием, не изменяя интерфейс
-* Позволяет добавлять другие декораторы "в цепочке"
-* Применяется когда нельзя расширить обязанности объекта с помощью наследования
+#### What problems it solves
+* Helps extend a class with some specific behavior without changing its interface
+* Lets you add other decorators "in a chain"
+* Used when you can't extend an object's responsibilities through inheritance
 
-#### Пример
+#### Example
 ```php
 $coffee = new SimpleCoffee();
 // apply the Decorator for the $coffee object
@@ -195,18 +195,18 @@ Coffee
 Coffee, with milk
 Coffee, with milk, with vanilla */
 ```
-[Полный пример](Structural/Decorator.php)
+[Full example](Structural/Decorator.php)
 
 
-## Фасад (Facade)
-#### Суть паттерна
-Предоставляет упрощенный интерфейс к сложной системе вызовов или системе классов.
+## Facade
+#### The essence of the pattern
+Provides a simplified interface to a complex system of calls or a complex system of classes.
 
-#### Какие проблемы решает
-* Представляет простой или урезанный интерфейс к сложной подсистеме
-* Помогает произвести декомпозицию сложной подсистемы на "подсистемы"
+#### What problems it solves
+* Provides a simple or trimmed-down interface to a complex subsystem
+* Helps decompose a complex subsystem into "subsystems"
 
-#### Пример
+#### Example
 ```php
 class SignUpFacade
 {
@@ -222,20 +222,20 @@ class SignUpFacade
 $facade = new SignUpFacade();
 $facade->signUpUser('Sergey', '123456', 'test@mail.com');
 ```
-[Полный пример](Structural/Facade.php)
+[Full example](Structural/Facade.php)
 
 
-## Компоновщик (Composite)
-#### Суть паттерна
-Позволяет сгруппировать множество объектов в древовидную структуру, а затем работать с ней так, как будто это единичный объект. Паттерн предлагает хранить в составных объектах ссылки на другие простые или составные объекты. Те, в свою очередь, тоже могут хранить свои вложенные объекты и так далее.
+## Composite
+#### The essence of the pattern
+Lets you group many objects into a tree structure and then work with it as if it were a single object. The pattern proposes storing references to other simple or composite objects inside composite objects. Those, in turn, can also store their own nested objects, and so on.
 
-Клиентский код работает со всеми объектами через общий интерфейс и не знает, что перед ним — простой или составной объект. Это позволяет клиентскому коду работать с деревьями объектов любой сложности, не привязываясь к конкретным классам объектов, формирующих дерево.
+The client code works with all objects through a common interface and doesn't know whether it's dealing with a simple or a composite object. This allows the client code to work with object trees of any complexity without being tied to the concrete classes of the objects that form the tree.
 
-#### Какие проблемы решает
-* Упрощает работу с любыми древовидными рекурсивными структурами
-* Позволяет единообразно трактовать простые и составные объекты
+#### What problems it solves
+* Simplifies working with any tree-like recursive structures
+* Lets you treat simple and composite objects uniformly
 
-#### Пример
+#### Example
 ```php
 $shoppingCart[] = new Product('Bike', 200);
 
@@ -257,21 +257,21 @@ foreach ($shoppingCart as $cartItem) {
 }
 echo $totalPrice;   // Output: 1500
 ```
-[Полный пример](Structural/Composite.php)
+[Full example](Structural/Composite.php)
 
 
-## Мост (Bridge)
-#### Суть паттерна
-Разделяет один или несколько классов на две отдельные иерархии — абстракцию и реализацию, позволяя изменять их независимо друг от друга.
+## Bridge
+#### The essence of the pattern
+Splits one or more classes into two separate hierarchies — abstraction and implementation — allowing them to be changed independently of each other.
 
-Паттерн предлагает заменить наследование делегированием. Когда класс нужно расширять в двух независимых плоскостях, паттерн предлагает выделить одну из таких плоскостей в отдельную иерархию классов, храня ссылку на один из ее объектов в первоначальном классе.
+The pattern proposes replacing inheritance with delegation. When a class needs to be extended in two independent dimensions, the pattern proposes extracting one of those dimensions into a separate class hierarchy, keeping a reference to one of its objects in the original class.
 
-#### Какие проблемы решает
-* Полезен в ситуации, когда класс нужно расширять в двух независимых плоскостях
-* Позволяет разделить монолитный класс, который содержит несколько различных реализаций на более специализированные реализации
-* Сохраняет возможность подмены реализации во время выполнения программы
+#### What problems it solves
+* Useful in a situation where a class needs to be extended in two independent dimensions
+* Lets you split a monolithic class that contains several different implementations into more specialized implementations
+* Preserves the ability to swap the implementation at runtime
 
-#### Пример
+#### Example
 ```php
 // some 'abstraction' hierarchy
 abstract class WebPage 
@@ -297,20 +297,20 @@ $lightTheme = new LightTheme();
 $aboutPage = new AboutPage($lightTheme);
 echo $aboutPage->getContent();      // Output: About page in White colors
 ```
-[Полный пример](Structural/Bridge.php)
+[Full example](Structural/Bridge.php)
 
 
-## Заместитель (Proxy)
-#### Суть паттерна
-Позволяет подставлять вместо реальных объектов специальные объекты "заменители". Эти объекты перехватывают вызовы к оригинальному объекту, позволяя сделать что-то до или после передачи вызова методов оригинала.
+## Proxy
+#### The essence of the pattern
+Lets you substitute special "stand-in" objects in place of real objects. These objects intercept calls to the original object, allowing you to do something before or after passing the method calls on to the original.
 
-Заместитель предлагает создать новый класс "дублер", имеющий тот же интерфейс, что и оригинальный объект. Мы можем поместить в класс заместителя какую-то промежуточную логику, которая будет выполняться до или после вызовов этих же методов в настоящем объекте. А благодаря одинаковому интерфейсу, объект-заместитель можно передать в любой код, ожидающий оригинальный объект.
+The proxy proposes creating a new "stand-in" class that has the same interface as the original object. We can place some intermediate logic in the proxy class, which will be executed before or after calls to the same methods on the real object. And thanks to the identical interface, the proxy object can be passed to any code that expects the original object.
 
-#### Какие проблемы решает
-* Полезен в реализации "ленивой загрузки"
-* Полезен при добавлении дополнительного поведения (проверок, логирования, кэширования и т.д.), сохраняет при этом интерфейс оригинального объекта
+#### What problems it solves
+* Useful for implementing "lazy loading"
+* Useful when adding extra behavior (validation, logging, caching, etc.) while preserving the interface of the original object
 
-#### Пример
+#### Example
 ```php
 class WeatherProxy implements WeatherClient
 {
@@ -340,21 +340,21 @@ cache: MISS, weather: clear sky
 cache: MISS, weather: scattered clouds
 cache: HIT, weather: clear sky */
 ```
-[Полный пример](Structural/Proxy.php)
+[Full example](Structural/Proxy.php)
 
 
-## Легковес (Flyweight)
-#### Суть паттерна
-Экономит память, разделяя общее состояние объектов между собой, вместо хранения одинаковых данных в каждом объекте.
+## Flyweight
+#### The essence of the pattern
+Saves memory by sharing the common state of objects between them, instead of storing identical data in each object.
 
-Легковес применяется в программе, имеющей большое количество одинаковых объектов. Паттерн разделяет данные этих объектов на две части — "легковесы" и "контексты". Теперь, вместо хранения повторяющихся данных во всех объектах, отдельные объекты будут ссылаться на несколько общих объектов, хранящих эти данные. Клиент работает через фабрику, которая скрывает от него сложность организации общих данных.
+Flyweight is used in a program that has a large number of identical objects. The pattern splits the data of these objects into two parts — "flyweights" and "contexts". Now, instead of storing repeating data in all objects, individual objects will reference a few shared objects that hold this data. The client works through a factory that hides from it the complexity of organizing the shared data.
 
-> Реальное применение паттерна на PHP встречается довольно редко. Это связано с однопоточным характером PHP, где вы не должны хранить ВСЕ объекты вашего приложения в памяти одновременно в одном потоке
+> Real-world use of the pattern in PHP is fairly rare. This is due to the single-threaded nature of PHP, where you shouldn't keep ALL of your application's objects in memory at the same time within a single thread
 
-#### Какие проблемы решает
-* Позволяет вместить большее количество объектов в отведенную оперативную память
+#### What problems it solves
+* Lets you fit a larger number of objects into the allocated RAM
 
-#### Пример
+#### Example
 ```php
 $shoppingCart = new ShoppingCart();
 $shoppingCart->addProduct('Sports shoes', 120, 'Nike');
@@ -366,21 +366,21 @@ $shoppingCart->addProduct('Everyday shoes', 90, 'Adidas');
 echo count($shoppingCart->getProducts()); // 5 products in basket
 echo count(ProductFactory::$brandTypes); // and only 3 unique brands instances in memory
 ```
-[Полный пример](Structural/Flyweight.php)
+[Full example](Structural/Flyweight.php)
 
 
-## 3. Поведенческие шаблоны (Behavioral Patterns)
+## 3. Behavioral Patterns
 
-## Цепочка обязанностей (Chain of Responsibility)
-#### Суть паттерна
-Позволяет передавать запросы/вызовы последовательно по цепочке обработчиков. Каждый последующий обработчик решает, может ли он обработать запрос сам и стоит ли передавать запрос дальше по цепочке.
-Паттерн предлагает связать объекты обработчиков в одну цепь. Каждый из них будет иметь ссылку на следующий обработчик в цепи и сможет не только сам что-то с ним сделать, но и передать обработку следующему объекту в цепочке. 
+## Chain of Responsibility
+#### The essence of the pattern
+Lets you pass requests/calls sequentially along a chain of handlers. Each successive handler decides whether it can handle the request itself and whether the request should be passed further down the chain.
+The pattern proposes linking the handler objects into a single chain. Each of them will have a reference to the next handler in the chain and will be able not only to do something with the request itself, but also to pass the handling on to the next object in the chain.
 
-#### Какие проблемы решает
-* Запускать обработчиков последовательно один за другим в том порядке, в котором они находятся в цепочке
-* Когда заранее неизвестно, какие конкретно запросы будут приходить и какие обработчики для них понадобятся
+#### What problems it solves
+* Run handlers sequentially one after another in the order in which they appear in the chain
+* When it's not known in advance which specific requests will come in and which handlers will be needed for them
 
-#### Пример
+#### Example
 ```php
 // build the chain
 $logger = new DBLogger();
@@ -393,18 +393,18 @@ Save to database..
 Send by email.. 
 Save to log file.. */
 ```
-[Полный пример](Behavioral/ChainOfResponsibility.php)
+[Full example](Behavioral/ChainOfResponsibility.php)
 
 
-## Команда (Command)
-#### Суть паттерна
-Превращает операции в объекты, и такие объекты заключают в себя само действие и его параметры. Этот объект теперь можно логировать, хранить историю, отменять, передавать во внешние сервисы и так далее.
+## Command
+#### The essence of the pattern
+Turns operations into objects, and such objects encapsulate the action itself and its parameters. This object can now be logged, kept in a history, undone, passed to external services, and so on.
 
-#### Какие проблемы решает
-* Превращает операции в объекты, которые можно логировать, отменять, добавлять в очереди и т.д.
-* Предоставляет механизм отделения клиента от получателя
+#### What problems it solves
+* Turns operations into objects that can be logged, undone, added to queues, etc.
+* Provides a mechanism for decoupling the client from the receiver
 
-#### Пример
+#### Example
 ```php
 $invoker = new Invoker();
 $receiver = new Receiver();
@@ -417,21 +417,21 @@ $invoker->execute();
 Receiver: Turning on something..
 Receiver: Turning off something.. */
 ```
-[Полный пример](Behavioral/Command.php) | [Дополнительный пример](Behavioral/CommandExt.php)
+[Full example](Behavioral/Command.php) | [Additional example](Behavioral/CommandExt.php)
 
 
-## Итератор (Iterator)
-#### Суть паттерна
-Предоставляет возможность последовательно обходить элементы составных объектов, не раскрывая их внутреннего представления. Идея паттерна состоит в том, чтобы вынести поведение обхода коллекции из самой коллекции отдельно.
+## Iterator
+#### The essence of the pattern
+Provides the ability to sequentially traverse the elements of composite objects without exposing their internal representation. The idea of the pattern is to extract the collection-traversal behavior out of the collection itself into a separate place.
 
-#### Какие проблемы решает
-* Позволяет обходить сложные структуры данных, и скрыть при этом детали ее реализации
-* Позволяет иметь несколько вариантов обхода одной и той же структуры данных
-* Позволяет иметь единый интерфейс обхода различных структур данных
-* Дает возможность объекту самостоятельно принимать решение, как он будет итерироваться и какие данные будут доступны на каждой итерации
-* Зачастую используется, чтобы не только предоставить доступ к элементам, но и наделить обход некоторой дополнительной логикой
+#### What problems it solves
+* Lets you traverse complex data structures while hiding the details of their implementation
+* Lets you have several ways of traversing the same data structure
+* Lets you have a single interface for traversing different data structures
+* Gives an object the ability to decide on its own how it will be iterated and what data will be available on each iteration
+* Often used not only to provide access to elements, but also to endow the traversal with some additional logic
 
-#### Пример
+#### Example
 ```php
 $collection = (new SimpleCollection())->addItem('1st item')
     ->addItem('2nd item')
@@ -447,24 +447,24 @@ foreach ($collection->getIterator() as $item) {
 2nd item
 1st item */
 ```
-[Полный пример](Behavioral/Iterator.php) | [Дополнительный пример](Behavioral/IteratorExt.php)
+[Full example](Behavioral/Iterator.php) | [Additional example](Behavioral/IteratorExt.php)
 
 
-## Посредник(Mediator)
-#### Суть паттерна
-Посредник убирает прямые связи между отдельными компонентами, заставляя их общаться друг с другом через себя.
+## Mediator
+#### The essence of the pattern
+The mediator removes direct connections between individual components, forcing them to communicate with each other through itself.
 
-Паттерн определяет объект, который инкапсулирует логику взаимодействия некоторого набора других объектов. Посредник обеспечивает слабую связность благодаря тому, что объекты не ссылаются друг на друга явно и можно изменять алгоритм их взаимодействия независимо. Таким образом эти объекты проще переиспользовать. 
+The pattern defines an object that encapsulates the interaction logic of a certain set of other objects. The mediator provides loose coupling thanks to the fact that the objects don't reference each other explicitly, and their interaction algorithm can be changed independently. As a result, these objects are easier to reuse.
 
-Допустим в нашей системе есть множество объектов которые взаимодействуют друг с другом (часто их называют "коллегами"). Объекты могут реагировать на действие других объектов, вызывать друг у друга различные методы, и в данной конфигурации они являются сильно связанными. Мы создаем специальный объект `Mediator`, в который перенесем всю логику взаимодействия этого набора объектов, так что эти объекты вместо обращения друг другу будут уведомлять посредника. Тем самым мы избавимся от сильной связности. 
+Suppose our system has many objects that interact with each other (they are often called "colleagues"). The objects can react to the actions of other objects, call various methods on each other, and in this configuration they are tightly coupled. We create a special `Mediator` object into which we move all the interaction logic of this set of objects, so that instead of contacting each other these objects will notify the mediator. This way we get rid of the tight coupling.
 
-Объекты будут иметь ссылку на посредника и уведомлять его при различных событиях. А посредник свою очередь будет иметь ссылки на все объекты из этого множества. Так, что в соответствии с логикой их взаимодействия будет перенаправлять запросы конкретным объект.
+The objects will hold a reference to the mediator and notify it of various events. The mediator, in turn, will hold references to all the objects in this set. So, in accordance with their interaction logic, it will forward requests to specific objects.
 
-#### Какие проблемы решает
-* Убирает зависимости между компонентами системы, вместо этого они становятся зависимыми от самого посредника
-* Централизует управление в одном месте
+#### What problems it solves
+* Removes dependencies between the components of the system; instead they become dependent on the mediator itself
+* Centralizes control in one place
 
-#### Пример
+#### Example
 ```php
 $chat = new ChatMediator();
 
@@ -478,21 +478,21 @@ $john->sendMessage("Hi!");
 $jane->sendMessage("What's up?");
 $bot->sayHello();
 ```
-[Полный пример](Behavioral/Mediator.php)
+[Full example](Behavioral/Mediator.php)
 
 
-## Снимок (Memento)
-#### Суть паттерна
-Позволяет сохранять и восстанавливать прошлые состояния объектов "снимки", не раскрывая подробностей их реализации. Снимок — это простой объект данных, содержащий состояние (состояние свойств) создателя. 
-Паттерн предлагает держать копию состояния в специальном объекте-снимке с ограниченным интерфейсом, позволяющим, например, узнать дату изготовления или название снимка. Паттерн поручает создание копии состояния объекта самому объекту, который этим состоянием владеет.
+## Memento
+#### The essence of the pattern
+Lets you save and restore the past states of objects ("snapshots") without revealing the details of their implementation. A snapshot is a simple data object containing the state (the state of the properties) of the originator.
+The pattern proposes keeping a copy of the state in a special snapshot object with a limited interface that allows, for example, finding out the snapshot's creation date or name. The pattern entrusts the creation of a copy of the object's state to the object that owns that state.
 
-> Реальная применимость паттерна Снимок в PHP под большим вопросом. Чаще всего задачу хранения копии состояния можно решить куда проще при помощи [сериализации](http://php.net/manual/en/language.oop5.serialization.php) (применения вызовов `serialize()` и `unserialize()`)
+> The real-world applicability of the Memento pattern in PHP is highly questionable. Most often the task of storing a copy of the state can be solved much more simply with [serialization](http://php.net/manual/en/language.oop5.serialization.php) (using the `serialize()` and `unserialize()` calls)
 
-#### Какие проблемы решает
-* Позволяет создавать любое количество "снимков" объекта и хранить их независимо от объекта
-* Позволяет реализовать операции отмены или отката состояния, например если операция не удалась
+#### What problems it solves
+* Lets you create any number of "snapshots" of an object and store them independently of the object
+* Lets you implement undo or rollback operations, for example if an operation failed
 
-#### Пример
+#### Example
 ```php
 $editor = new Editor();
 $editor->type('This is the first sentence.');
@@ -509,22 +509,22 @@ $editor->restore($memento);
 echo $editor->getContent();
 /* Output: This is the first sentence. This is second. */
 ```
-[Полный пример](Behavioral/Memento.php)
+[Full example](Behavioral/Memento.php)
 
 
-## Наблюдатель (Observer)
-#### Суть паттерна
-Создает механизм "подписки", позволяющий одним объектам следить и реагировать на события, происходящие в других объектах. Основные участники паттерна это "издатели" `Subject` и "подписчики" `Observer`.
+## Observer
+#### The essence of the pattern
+Creates a "subscription" mechanism that lets some objects watch and react to events happening in other objects. The main participants of the pattern are the "publishers" `Subject` and the "subscribers" `Observer`.
 
-Паттерн предлагает хранить внутри объекта "издателя" список объектов подписчиков. А также предоставлять методы, с помощью которых "подписчики" могут подписаться или отписаться на события.
+The pattern proposes storing a list of subscriber objects inside the "publisher" object. It also provides methods by which "subscribers" can subscribe to or unsubscribe from events.
 
-> PHP имеет несколько встроенных интерфейсов `SplSubject`, `SplObserver`, на основе которых можно строить свои реализации
+> PHP has several built-in interfaces, `SplSubject` and `SplObserver`, on top of which you can build your own implementations
 
-#### Какие проблемы решает
-* Позволяет отдельным компонентам реагировать на события, происходящие в других компонентах
-* Наблюдатели могут подписываться или отписываться от получения оповещений динамически, во время выполнения программы
+#### What problems it solves
+* Lets individual components react to events happening in other components
+* Observers can subscribe to or unsubscribe from receiving notifications dynamically, at runtime
 
-#### Пример
+#### Example
 ```php
 $cart = new Cart(); // subject
 $cart->attach(new LoggingListener()); // attach an Observer
@@ -533,21 +533,21 @@ $cart->setBalance(10); // trigger an event
 /* Output:
 Notification: balance of the shopping cart was changed to 10 */
 ```
-[Полный пример](Behavioral/Observer.php)
+[Full example](Behavioral/Observer.php)
 
 
-## Стратегия (Strategy)
-#### Суть паттерна
-Определяет семейство схожих алгоритмов и помещает каждый из них в собственный класс, предоставляет возможность взаимозаменять алгоритмы во время исполнения программы.
+## Strategy
+#### The essence of the pattern
+Defines a family of similar algorithms and places each of them into its own class, providing the ability to interchange the algorithms at runtime.
 
-Вместо того, чтобы изначальный класс сам выполнял тот или иной алгоритм, он будет играть роль контекста, ссылаясь на одну из стратегий и делегируя ей выполнение работы. Чтобы сменить алгоритм, вам будет достаточно подставить в изначальный класс другой объект-стратегию.
+Instead of the original class performing one algorithm or another itself, it will play the role of a context, referencing one of the strategies and delegating the work to it. To switch the algorithm, all you need to do is substitute a different strategy object into the original class.
 
-#### Какие проблемы решает
-* Описывает разные способы произвести одно и то же действие, позволяя взаимозаменять эти способы в каком-то объекте контекста
-* Позволяет вынести отличающееся поведение в отдельную иерархию классов, уменьшает количество if-else операторов
-* Позволяет изолировать код, данные и зависимости алгоритмов от других объектов, скрыв детали реализации внутри классов-стратегий
+#### What problems it solves
+* Describes different ways of performing the same action, allowing these ways to be interchanged within some context object
+* Lets you extract the differing behavior into a separate class hierarchy, reducing the number of if-else statements
+* Lets you isolate the code, data, and dependencies of the algorithms from other objects, hiding the implementation details inside the strategy classes
 
-#### Пример
+#### Example
 ```php
 interface SortStrategy
 {
@@ -569,20 +569,20 @@ if (count($data) < 10) {
 
 /* Output: Sorting using bubble sort.. */
 ```
-[Полный пример](Behavioral/Strategy.php)
+[Full example](Behavioral/Strategy.php)
 
 
-## Состояние (State)
-#### Суть паттерна
-Позволяет объекту изменять свое поведение в зависимости от внутреннего состояния, является объектно-ориентированной реализацией конечного автомата.
+## State
+#### The essence of the pattern
+Lets an object change its behavior depending on its internal state; it's an object-oriented implementation of a finite-state machine.
 
-Шаблон можно рассматривать как надстройку над шаблоном Стратегия. Оба паттерна используют композицию, чтобы менять поведение основного объекта, делегируя работу вложенным объектам-помощникам. Однако в Стратегии эти объекты не знают друг о друге и никак не связаны, тогда как в Состоянии сами конкретные состояния могут переключать контекст.
+The pattern can be regarded as an extension of the Strategy pattern. Both patterns use composition to change the behavior of the main object, delegating the work to nested helper objects. However, in Strategy these objects know nothing about each other and are not connected in any way, whereas in State the concrete states themselves can switch the context.
 
-#### Какие проблемы решает
-* Позволяет объектам менять поведение в зависимости от своего состояния
-* Позволяет изменять поведение во время выполнения программы и избавиться от условных операторов, разбросанных по коду
+#### What problems it solves
+* Lets objects change their behavior depending on their state
+* Lets you change behavior at runtime and get rid of conditional statements scattered throughout the code
 
-#### Пример
+#### Example
 ```php
 $editor = new TextEditor(new DefaultState());
 $editor->type('First line');
@@ -598,21 +598,21 @@ First line
 SECOND LINE
 third line */
 ```
-[Полный пример](Behavioral/State.php)
+[Full example](Behavioral/State.php)
 
 
-## Шаблонный метод (Template method)
-#### Суть паттерна
-Позволяет определить каркас алгоритма и позволяет подклассам переопределять определенные этапы алгоритма без изменения его структуры.
+## Template Method
+#### The essence of the pattern
+Lets you define the skeleton of an algorithm and lets subclasses override certain steps of the algorithm without changing its structure.
 
-Мы разбиваем алгоритм на последовательность шагов, превращаем эти шаги в методы и вызываем их один за другим внутри одного "шаблонного" метода. Подклассы смогут переопределять определенные шаги, но не фактический метод "шаблона".
-Мы сохраним последовательность вызовов, но у нас будет возможность изменить один из этих шагов в унаследованных классах.
+We break the algorithm down into a sequence of steps, turn these steps into methods, and call them one after another inside a single "template" method. Subclasses will be able to override certain steps, but not the actual "template" method.
+We will preserve the sequence of calls, but we will have the ability to change one of these steps in the inherited classes.
 
-#### Какие проблемы решает
-* Позволяет подклассам расширять базовый алгоритм, не меняя его структуры
-* Позволяет убрать дублирование кода в нескольких классах с похожим поведением, но отличающихся в деталях
+#### What problems it solves
+* Lets subclasses extend the base algorithm without changing its structure
+* Lets you remove code duplication across several classes with similar behavior but differing in details
 
-#### Пример
+#### Example
 ```php
 abstract class AbstractFileConverter
 {
@@ -643,24 +643,24 @@ Step2. Validate CSV file..
 Step3. Convert CSV file..
 Step4. Close a file descriptor.. */
 ```
-[Полный пример](Behavioral/TemplateMethod.php) | [Дополнительный пример](Behavioral/TemplateMethodExt.php)
+[Full example](Behavioral/TemplateMethod.php) | [Additional example](Behavioral/TemplateMethodExt.php)
 
 
-## Посетитель (Visitor)
-#### Суть паттерна
-Позволяет расширить набор объектов (не обязательно связанных между собой) новыми функциями. Функция, как правило, имеет общий смысл или одну цель для всех объектов этих классов, но реализуется для каждого из них по разному (например экспорт сущности).
+## Visitor
+#### The essence of the pattern
+Lets you extend a set of objects (not necessarily related to each other) with new functions. The function usually has a common meaning or a single purpose for all objects of these classes, but is implemented differently for each of them (for example, exporting an entity).
 
-Другими словами, позволяет добавлять новые операции, не меняя классы объектов, над которыми эти операции могут выполняться. При изменении посетителя нет необходимости изменять основные классы. 
+In other words, it lets you add new operations without changing the classes of the objects on which these operations can be performed. When the visitor is changed, there's no need to change the main classes.
 
-Применяется подход "двойной диспетчеризации" (Double Dispatch), когда конкретная реализация метода, который будет вызван при работе программы, зависит и от объекта у которого этот метод вызывается и от типа объекта который передается в качестве аргумента.
+The "Double Dispatch" approach is used, where the concrete implementation of the method that will be called at runtime depends both on the object on which the method is called and on the type of the object passed as an argument.
 
-> Изменить классы узлов единожды все-таки придется. Важно, чтобы иерархия компонентов, менялась редко, так как при добавлении нового компонента придется менять всех существующих посетителей
+> You will still have to change the node classes once. It's important that the hierarchy of components changes rarely, because when adding a new component you'll have to change all the existing visitors
 
-#### Какие проблемы решает
-* Дает возможность внедрять новое поведение в объекты, без внесения изменений в классы
-* Позволяет внедрить функциональность когда нет доступа или возможности изменять классы или не хочется добавлять им дополнительную ответственность
+#### What problems it solves
+* Gives you the ability to introduce new behavior into objects without making changes to the classes
+* Lets you introduce functionality when you don't have access to or the ability to change the classes, or don't want to give them additional responsibility
 
-#### Пример
+#### Example
 ```php
 $report = new Report('report_title', 'report_content');
 
@@ -671,5 +671,4 @@ echo $report->accept(new XMLExportVisitor());
 "report_title {diagram} report_content"
 <?xml version="1.0" <xml><title>report_title<diagram> */
 ```
-[Полный пример](Behavioral/Visitor.php)
-
+[Full example](Behavioral/Visitor.php)
